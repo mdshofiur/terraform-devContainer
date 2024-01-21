@@ -1,7 +1,7 @@
-variable "vpc_cidr" {
-  type: string
+variable "vpc_cidr_block" {
+  type = string
 }
 
 variable "Name" {
-  type: string
+  type = string
 }
