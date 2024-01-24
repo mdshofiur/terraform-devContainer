@@ -34,23 +34,53 @@ provider "aws" {
 #   Name = "main"
 # }
 
+
+
 module "vpc" {
   source = "./vpc"
 
-  Name = "my-vpc"
+  vpc_name = "my-vpc"
+
   vpc_cidr_block = "10.0.0.0/16"
 
-  azs             = ["us-east-1a", "us-east-1b"]
-  private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
-  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24"]
 
-  enable_nat_gateway = true
-  enable_vpn_gateway = true
+  subnet_configs = [
+    {
+      name : "public-subnet",
+      cidr_block        = "10.0.1.0/24"
+      availability_zone = "us-east-1a"
+      allow_public_ip   = true
+    },
+    {
+      name : "private-subnet",
+      cidr_block        = "10.0.2.0/24"
+      availability_zone = "us-east-1a"
+      allow_public_ip   = false
+    }
+  ]
 
-  tags = {
-    Terraform = "true"
-    Environment = "dev"
-  }
+  route_table_variable = [
+    {
+      name        = "router_table_1"
+      subnet_name = "public_subnet"
+      routes : [
+        {
+          cidr_block = "0.0.0.0/0"
+          gateway_id = module.vpc.internet_gateway_id
+        },
+        {
+          cidr_block = "10.0.2.0/24"
+          gateway_id = "local"
+        },
+      ]
+    },
+  ]
+
+
+
 }
+
+
+
 
 
