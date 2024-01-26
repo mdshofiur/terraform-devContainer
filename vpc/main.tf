@@ -32,19 +32,38 @@ resource "aws_subnet" "subnet" {
 }
 
 
+# resource "aws_route_table" "route_table_configs" {
+#   count  = length(var.route_table_variable)
+#   vpc_id = aws_vpc.main.id
+
+#   dynamic "route" {
+#     for_each = var.route_table_variable[count.index].routes
+#     content {
+#       cidr_block = var.routes.value.cidr_block
+#       gateway_id = var.routes.value.gateway_id
+#     }
+#   }
+
+#   tags = {
+#     Name = "${var.vpc_name}-${var.route_table_variable[count.index].name}-${count.index + 1}"
+#   }
+# }
+
+
+
+
 resource "aws_route_table" "route_table_configs" {
-  count  = length(var.route_table_variable)
+  count = length(var.route_table_variable)
+
   vpc_id = aws_vpc.main.id
+  tags   = { Name = var.route_table_variable[count.index].name }
 
   dynamic "route" {
     for_each = var.route_table_variable[count.index].routes
+
     content {
       cidr_block = route.value.cidr_block
-      gateway_id = route.value.gateway_id
+      gateway_id = lookup(aws_internet_gateway.vpc, "id", null)
     }
-  }
-
-  tags = {
-    Name = "${var.vpc_name}-${var.route_table_variable[count.index].name}-${count.index + 1}"
   }
 }
