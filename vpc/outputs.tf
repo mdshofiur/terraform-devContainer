@@ -1,11 +1,18 @@
-# output "private_subnet_ids" {
-#   value = module.vpc.private_subnet_ids
-# }
-
-
 
 # output "internet_gateway_id" {
 #   value = aws_internet_gateway.gw.id
+# }
+
+# output "aws_vpc_id" {
+#   value = aws_vpc.main.id
+# }
+
+# output "aws_subnet_public_ids" {
+#   value = aws_subnet.subnet[0].id
+# }
+
+# output "aws_subnet_public_ids" {
+#   value = aws_subnet.subnet.*.id
 # }
 
 # output "internet_gateway_ids" {

@@ -1,1 +1,1 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"vpc","Source":"./vpc","Dir":"vpc"},{"Key":"vpc_module","Source":"./vpc","Dir":"vpc"}]}
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"route_table","Source":"./modules/route_table","Dir":"modules/route_table"},{"Key":"vpc","Source":"./vpc","Dir":"vpc"},{"Key":"vpc_module","Source":"./vpc","Dir":"vpc"}]}

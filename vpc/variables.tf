@@ -19,15 +19,15 @@ variable "subnet_configs" {
 }
 
 
-variable "route_table_variable" {
-  type = list(object({
-    name        = string
-    subnet_name = string
-    routes      = list(object({
-      cidr_block = string
-      gateway_id = string
-    }))
-  }))
-  description = "List of route table configurations"
-}
+# variable "route_table_variable" {
+#   type = list(object({
+#     name        = string
+#     subnet_name = string
+#     routes = list(object({
+#       cidr_block = string
+#       gateway_id = string
+#     }))
+#   }))
+#   description = "List of route table configurations"
+# }
 
