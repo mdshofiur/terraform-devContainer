@@ -19,31 +19,39 @@ provider "aws" {
   region = "us-east-1"
 }
 
-
-
 module "vpc" {
-  source = "./vpc"
-
-  vpc_name = "my-vpc"
-
+  source         = "./modules/vpc"
+  vpc_name       = "my-vpc"
   vpc_cidr_block = "10.0.0.0/16"
+}
 
-  subnet_configs = [
+
+module "subnet" {
+  source = "./modules/subnet"
+  public_subnet_configs = [
     {
-      name : "public-subnet",
+      name : "public-accessible",
       cidr_block        = "10.0.1.0/24"
       availability_zone = "us-east-1a"
       allow_public_ip   = true
-    },
-    {
-      name : "private-subnet",
-      cidr_block        = "10.0.2.0/24"
-      availability_zone = "us-east-1a"
-      allow_public_ip   = false
+      vpc_id            = module.vpc.aws_vpc_id
+      vpc_name          = module.vpc.vpc_name
     }
   ]
 
+  private_subnet_configs = [
+    {
+      name : "private-accessible",
+      cidr_block        = "10.0.3.0/24"
+      availability_zone = "us-east-1a"
+      allow_public_ip   = false
+      vpc_id            = module.vpc.aws_vpc_id
+      vpc_name          = module.vpc.vpc_name
+    }
+  ]
 }
+
+
 
 
 module "route_table" {
