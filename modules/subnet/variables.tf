@@ -11,13 +11,14 @@ variable "public_subnet_configs" {
 }
 
 
-# variable "public_route_table_association" {
-#   type = object({
-#     subnet_id      = string
-#     route_table_id = string
-#   })
-#   description = "Map of route table association"
-# }
+
+
+variable "public_aws_route" {
+  type = object({
+    cidr_block = string
+    gateway_id = string
+  })
+}
 
 
 

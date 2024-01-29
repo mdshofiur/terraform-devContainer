@@ -20,9 +20,9 @@ provider "aws" {
 }
 
 module "vpc" {
-  source         = "./modules/vpc"
-  vpc_name       = "my-vpc"
-  vpc_cidr_block = "10.0.0.0/16"
+  source        = "./modules/vpc"
+  vpc_name      = "my-vpc"
+  vpc_cidr_base = "10.0"
 }
 
 
@@ -49,34 +49,16 @@ module "subnet" {
       vpc_name          = module.vpc.vpc_name
     }
   ]
-}
 
 
-
-
-module "route_table" {
-  source = "./modules/route_table"
-
-  public_route_table_tags = {
-    name   = "public-route-table"
-    vpc_id = module.vpc.aws_vpc_id
+  public_aws_route = {
+    cidr_block = "0.0.0.0/16"
+    gateway_id = module.vpc.internet_gateway_id
   }
 
-  public_route = {
-    route_table_id = module.route_table.public_route_table_id
-    cidr_block     = "0.0.0.0/0"
-    gateway_id     = module.vpc.internet_gateway_id
-  }
-
-
-  # public_route_table_association = {
-  #   subnet_id      = module.subnet.aws_subnet_public_id
-  #   route_table_id = module.route_table.public_route_table_id
-  # }
-
+ 
 
 }
-
 
 
 

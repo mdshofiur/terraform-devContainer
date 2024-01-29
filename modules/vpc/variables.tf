@@ -1,6 +1,6 @@
-variable "vpc_cidr_block" {
-  type        = string
-  description = "CIDR block for the VPC"
+variable "vpc_cidr_base" {
+  default     = "10.0"
+  description = "value for the first two octets of the VPC CIDR block"
 }
 
 variable "vpc_name" {
