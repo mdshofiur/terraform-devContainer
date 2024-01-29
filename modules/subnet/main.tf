@@ -11,6 +11,15 @@ resource "aws_subnet" "public-subnet" {
 }
 
 
+resource "aws_route_table_association" "public_subnet_association" {
+  count          = length(var.public_subnet_configs)
+  subnet_id      = element(aws_subnet.public-subnet.*.id, count.index)
+  route_table_id = aws_route_table.public_table.id
+}
+
+
+
+
 resource "aws_subnet" "private-subnet" {
   count                   = length(var.private_subnet_configs)
   vpc_id                  = var.public_subnet_configs[count.index]["vpc_id"]

@@ -11,6 +11,15 @@ variable "public_subnet_configs" {
 }
 
 
+# variable "public_route_table_association" {
+#   type = object({
+#     subnet_id      = string
+#     route_table_id = string
+#   })
+#   description = "Map of route table association"
+# }
+
+
 
 variable "private_subnet_configs" {
   type = list(object({

@@ -12,7 +12,8 @@ resource "aws_route" "public_route" {
 }
 
 
-resource "aws_route_table_association" "public_subnet_association" {
-  subnet_id      = var.public_route_table_association["subnet_id"]
-  route_table_id = var.public_route_table_association["route_table_id"]
-}
+
+# resource "aws_route_table_association" "public_subnet_association" {
+#   subnet_id      = var.public_route_table_association["subnet_id"]
+#   route_table_id = var.public_route_table_association["route_table_id"]
+# }

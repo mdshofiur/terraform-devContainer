@@ -69,10 +69,10 @@ module "route_table" {
   }
 
 
-  public_route_table_association = {
-    subnet_id      = module.vpc.aws_subnet_public_ids[0]
-    route_table_id = module.route_table.public_route_table_id
-  }
+  # public_route_table_association = {
+  #   subnet_id      = module.subnet.aws_subnet_public_id
+  #   route_table_id = module.route_table.public_route_table_id
+  # }
 
 
 }

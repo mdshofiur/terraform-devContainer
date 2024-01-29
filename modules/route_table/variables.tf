@@ -15,10 +15,10 @@ variable "public_route" {
   description = "Map of public route"
 }
 
-variable "public_route_table_association" {
-  type = object({
-    subnet_id      = string
-    route_table_id = string
-  })
-  description = "Map of route table association"
-}
+# variable "public_route_table_association" {
+#   type = object({
+#     subnet_id      = string
+#     route_table_id = string
+#   })
+#   description = "Map of route table association"
+# }
