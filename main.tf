@@ -52,7 +52,7 @@ module "subnet" {
 
 
   public_aws_route = {
-    cidr_block = "0.0.0.0/16"
+    cidr_block = "0.0.0.0/0"
     gateway_id = module.vpc.internet_gateway_id
   }
 
