@@ -18,13 +18,6 @@
 #   gateway_id             = var.public_route["gateway_id"]
 # }
 
-# resource "aws_route" "public_route" {
-#   count                  = length(var.public_route)
-#   route_table_id         = var.public_route[count.index]["route_table_ids"]
-#   destination_cidr_block = var.public_route[count.index]["cidr_block"]
-#   gateway_id             = var.public_route[count.index]["gateway_id"]
-# }
-
 
 # resource "aws_route_table_association" "public_subnet_association" {
 #   subnet_id      = var.public_route_table_association["subnet_id"]
