@@ -1,29 +1,11 @@
-# terraform {
-#   cloud {
-#     organization = "shofiurbd13"
 
-#     workspaces {
-#       name = "aws-automation"
-#     }
-#   }
 
-#   required_providers {
-#     aws = {
-#       source  = "hashicorp/aws"
-#       version = "5.32.1"
-#     }
-#   }
-# }
+module "vpc" {
+  source        = "../modules/vpc"
+  vpc_name      = var.name
+  vpc_cidr_base = var.vpc_cidr
+}
 
-# provider "aws" {
-#   region = "us-east-1"
-# }
-
-# module "vpc" {
-#   source        = "./modules/vpc"
-#   vpc_name      = "my-vpc"
-#   vpc_cidr_base = "10.0"
-# }
 
 
 # module "subnet" {
@@ -59,6 +41,3 @@
 
 
 # }
-
-
-

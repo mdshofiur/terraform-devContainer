@@ -19,3 +19,16 @@ resource "aws_internet_gateway_attachment" "name" {
   vpc_id              = aws_vpc.main.id
   internet_gateway_id = aws_internet_gateway.gw.id
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
