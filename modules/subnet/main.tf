@@ -1,3 +1,4 @@
+# For public subnet configurations
 resource "aws_subnet" "public_subnets" {
   count                   = length(var.public_subnet_configs)
   vpc_id                  = var.public_subnet_configs[count.index].vpc_id
@@ -10,7 +11,8 @@ resource "aws_subnet" "public_subnets" {
 }
 
 resource "aws_route_table" "public_subnets_table" {
-  count  = length(var.aws_route_table_public)
+  # count  = length(var.aws_route_table_public)
+  count  = length(var.public_subnet_configs)
   vpc_id = var.aws_route_table_public[count.index].vpc_id
 
   dynamic "route" {
@@ -20,4 +22,14 @@ resource "aws_route_table" "public_subnets_table" {
       gateway_id = route.value.gateway_id
     }
   }
+  tags = {
+    Name = var.aws_route_table_public[count.index].route_table_name
+  }
+}
+
+
+resource "aws_route_table_association" "public_subnet_association" {
+  count          = length(var.public_subnet_configs)
+  subnet_id      = aws_subnet.public_subnets[count.index].id
+  route_table_id = aws_route_table.public_subnets_table[count.index].id
 }

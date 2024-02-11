@@ -21,3 +21,4 @@ variable "aws_route_table_public" {
   }))
   description = "List of Route Table configurations"
 }
+
