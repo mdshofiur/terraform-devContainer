@@ -1,1 +1,0 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"dev","Source":"../../blueprint","Dir":"../../blueprint"},{"Key":"dev.my_vpc","Source":"../modules/vpc","Dir":"../../modules/vpc"},{"Key":"dev_infra","Source":"../../blueprint","Dir":"../../blueprint"},{"Key":"dev_infra.my_vpc","Source":"../modules/vpc","Dir":"../../modules/vpc"}]}

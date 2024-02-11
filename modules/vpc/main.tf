@@ -1,23 +1,24 @@
-resource "aws_vpc" "this" {
-  cidr_block           = "${var.vpc_cidr_base}.0.0/16"
+resource "aws_vpc" "k3s_cluster_vpc" {
+  cidr_block           = var.vpc_cidr_base
   enable_dns_support   = true
   enable_dns_hostnames = true
+
+  tags = merge(var.tags, {
+    Name = var.vpc_name
+  })
+}
+
+resource "aws_internet_gateway" "gw" {
   tags = {
-    Name = "my_vpc_test"
+    Name = "${var.vpc_name}-gw"
   }
 }
 
-# resource "aws_internet_gateway" "gw" {
-#   tags = {
-#     Name = "${var.vpc_name}-gw"
-#   }
-# }
 
-
-# resource "aws_internet_gateway_attachment" "name" {
-#   vpc_id              = aws_vpc.main.id
-#   internet_gateway_id = aws_internet_gateway.gw.id
-# }
+resource "aws_internet_gateway_attachment" "name" {
+  vpc_id              = aws_vpc.k3s_cluster_vpc.id
+  internet_gateway_id = aws_internet_gateway.gw.id
+}
 
 
 
