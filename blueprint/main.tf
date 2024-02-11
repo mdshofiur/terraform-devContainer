@@ -1,6 +1,4 @@
-
-
-module "vpc" {
+module "my_vpc" {
   source        = "../modules/vpc"
   vpc_name      = var.name
   vpc_cidr_base = var.vpc_cidr
@@ -37,7 +35,4 @@ module "vpc" {
 #     cidr_block = "0.0.0.0/0"
 #     gateway_id = module.vpc.internet_gateway_id
 #   }
-
-
-
 # }

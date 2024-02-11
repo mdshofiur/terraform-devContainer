@@ -3,7 +3,7 @@ terraform {
     organization = "shofiurbd13"
 
     workspaces {
-      name = "aws-automation"
+      name = "blueprint"
     }
   }
 
@@ -15,14 +15,12 @@ terraform {
   }
 }
 
-
 provider "aws" {
   region = "us-east-1"
 }
 
-module "dev" {
-  source   = "../../blueprint"
+module "dev_infra" {
+  source = "../../blueprint"
   name     = "master-vpc"
   vpc_cidr = "10.0"
 }
-

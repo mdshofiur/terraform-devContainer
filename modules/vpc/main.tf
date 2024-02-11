@@ -1,24 +1,23 @@
-resource "aws_vpc" "main" {
+resource "aws_vpc" "this" {
   cidr_block           = "${var.vpc_cidr_base}.0.0/16"
   enable_dns_support   = true
   enable_dns_hostnames = true
-
   tags = {
-    Name = var.vpc_name
+    Name = "my_vpc_test"
   }
 }
 
-resource "aws_internet_gateway" "gw" {
-  tags = {
-    Name = "${var.vpc_name}-gw"
-  }
-}
+# resource "aws_internet_gateway" "gw" {
+#   tags = {
+#     Name = "${var.vpc_name}-gw"
+#   }
+# }
 
 
-resource "aws_internet_gateway_attachment" "name" {
-  vpc_id              = aws_vpc.main.id
-  internet_gateway_id = aws_internet_gateway.gw.id
-}
+# resource "aws_internet_gateway_attachment" "name" {
+#   vpc_id              = aws_vpc.main.id
+#   internet_gateway_id = aws_internet_gateway.gw.id
+# }
 
 
 
