@@ -20,18 +20,15 @@ variable "public_subnet_variables" {
   description = "List of Public subnet configurations"
 }
 
-# Public subnet variable definitions
-# variable "public_subnet_variables" {
-#   type = list(object({
-#     name : var.public_subnet_name,
-#     cidr_block : var.public_subnet_cidr_block,
-#     availability_zone : var.public_subnet_availability_zone,
-#     allow_public_ip : var.public_subnet_allow_public_ip,
-#     vpc_id : var.vpc_id,
-#     vpc_name : var.vpc_name
-#   }))
-#   description = "List of Public subnet configurations"
-# }
-
-
+variable "aws_route_table_for_public_subnets" {
+  type        = list(object({
+    route_table_name = string
+    vpc_id           = string
+    routes           = list(object({
+      cidr_block = string
+      gateway_id = string
+    }))
+  }))
+  description = "List of Route Table configurations"
+}
 

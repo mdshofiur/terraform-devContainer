@@ -8,3 +8,16 @@ resource "aws_subnet" "public_subnets" {
     Name = var.public_subnet_configs[count.index].name
   }
 }
+
+resource "aws_route_table" "public_subnets_table" {
+  count  = length(var.aws_route_table_public)
+  vpc_id = var.aws_route_table_public[count.index].vpc_id
+
+  dynamic "route" {
+    for_each = var.aws_route_table_public[count.index].routes
+    content {
+      cidr_block = route.value.cidr_block
+      gateway_id = route.value.gateway_id
+    }
+  }
+}
