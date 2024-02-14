@@ -10,6 +10,8 @@ module "my_vpc" {
 
 module "public_subnet_details" {
   source = "../modules/subnet"
+
+  // Public subnet configurations
   public_subnet_configs = [
     {
       name              = var.public_subnet_variables[0].public_subnet_name
@@ -27,6 +29,26 @@ module "public_subnet_details" {
       route_table_name = var.aws_route_table_for_public_subnets[0].route_table_name
       vpc_id           = var.aws_route_table_for_public_subnets[0].vpc_id
       routes           = var.aws_route_table_for_public_subnets[0].routes
+    }
+  ]
+
+
+  // Private subnet configurations
+  private_subnet_configs = [
+    {
+      name              = var.private_subnet_variables[0].private_subnet_name
+      cidr_block        = var.private_subnet_variables[0].private_subnet_cidr_block
+      availability_zone = var.private_subnet_variables[0].private_subnet_availability_zone
+      vpc_id            = var.private_subnet_variables[0].vpc_id
+      vpc_name          = var.private_subnet_variables[0].vpc_name
+    }
+  ]
+
+  aws_route_table_private = [
+    {
+      route_table_name = var.aws_route_table_for_private_subnets[0].route_table_name
+      vpc_id           = var.aws_route_table_for_private_subnets[0].vpc_id
+      routes           = var.aws_route_table_for_private_subnets[0].routes
     }
   ]
 
@@ -57,8 +79,6 @@ module "public_subnet_details" {
   #     ]
   #   }
   # ]
-
-
 
 }
 
