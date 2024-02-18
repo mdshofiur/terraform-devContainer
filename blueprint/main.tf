@@ -26,9 +26,9 @@ module "public_subnet_details" {
 
   aws_route_table_public = [
     {
-      route_table_name = var.aws_route_table_for_public_subnets[0].route_table_name
-      vpc_id           = var.aws_route_table_for_public_subnets[0].vpc_id
-      routes           = var.aws_route_table_for_public_subnets[0].routes
+      route_table_name = var.aws_route_table_for_public_subnets[0].public_route_table_name
+      vpc_id           = var.aws_route_table_for_public_subnets[0].public_vpc_id
+      routes           = var.aws_route_table_for_public_subnets[0].public_routes
     }
   ]
 
@@ -46,9 +46,9 @@ module "public_subnet_details" {
 
   aws_route_table_private = [
     {
-      route_table_name = var.aws_route_table_for_private_subnets[0].route_table_name
-      vpc_id           = var.aws_route_table_for_private_subnets[0].vpc_id
-      routes           = var.aws_route_table_for_private_subnets[0].routes
+      route_table_name = var.aws_route_table_for_private_subnets[0].private_route_table_name
+      vpc_id           = var.aws_route_table_for_private_subnets[0].private_vpc_id
+      routes           = var.aws_route_table_for_private_subnets[0].private_routes
     }
   ]
 

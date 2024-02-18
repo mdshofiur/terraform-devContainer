@@ -22,9 +22,9 @@ variable "public_subnet_variables" {
 
 variable "aws_route_table_for_public_subnets" {
   type = list(object({
-    route_table_name = string
-    vpc_id           = string
-    routes = list(object({
+    public_route_table_name = string
+    public_vpc_id           = string
+    public_routes = list(object({
       cidr_block = string
       gateway_id = string
     }))
@@ -49,9 +49,9 @@ variable "private_subnet_variables" {
 
 variable "aws_route_table_for_private_subnets" {
   type = list(object({
-    route_table_name = string
-    vpc_id           = string
-    routes = list(object({
+    private_route_table_name = string
+    private_vpc_id           = string
+    private_routes = list(object({
       cidr_block = string
       gateway_id = string
     }))
