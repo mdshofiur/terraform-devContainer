@@ -26,7 +26,7 @@ module "dev_infra" {
     vpc_name                        = module.dev_infra.vpc_name_output
   }]
 
-  
+
   // Route table for public subnets
   aws_route_table_for_public_subnets = [{
     public_route_table_name = "public_route_table_1"
@@ -67,6 +67,10 @@ module "dev_infra" {
       {
         cidr_block = "10.0.0.0/16"
         gateway_id = "local"
+      },
+      {
+        cidr_block = "0.0.0.0/0"
+        gateway_id = module.dev_infra.nat_gateway_id_output
       }
     ]
   }]

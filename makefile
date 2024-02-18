@@ -9,10 +9,10 @@ plan: init
 	@terraform fmt -recursive
 	@terraform plan
 
-apply: plan
+apply:
 	@echo "Applying Terraform..."
 	@terraform fmt -recursive
-	@terraform apply
+	@terraform apply --auto-approve
 
 formate: 
 	@echo "Planning Formateing..."

@@ -38,9 +38,9 @@ resource "aws_route_table_association" "public_subnet_association" {
 
 
 
- /* -------------------------------------------------------------------------- */
- /*                      For private subnet configurations                     */
- /* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                      For private subnet configurations                     */
+/* -------------------------------------------------------------------------- */
 
 resource "aws_subnet" "private_subnets" {
   count                   = length(var.private_subnet_configs)
@@ -77,15 +77,19 @@ resource "aws_route_table_association" "private_subnet_association" {
 }
 
 
-
-
-// Nat Gateway for private subnets to access internet through public subnets 
+/* -------------------------------------------------------------------------- */
+/*             Nat Gateway for private subnets to access internet             */
+/* -------------------------------------------------------------------------- */
 
 
 # Allocate Elastic IPs for NAT Gateways
 resource "aws_eip" "my_eip" {
   count  = length(var.public_subnet_configs)
   domain = "vpc"
+
+  tags = {
+    Name = "eip_${count.index}"
+  }
 }
 
 # Create NAT Gateways

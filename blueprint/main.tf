@@ -36,7 +36,6 @@ module "public_subnet_details" {
     }
   ]
 
-
   // Route table for public subnets
   aws_route_table_public = [
     {
@@ -61,7 +60,6 @@ module "public_subnet_details" {
       vpc_name          = var.private_subnet_variables[0].vpc_name
     }
   ]
-
 
   // Route table for private subnets
   aws_route_table_private = [
