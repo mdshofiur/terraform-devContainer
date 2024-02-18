@@ -5,10 +5,16 @@ provider "aws" {
 module "dev_infra" {
   source = "./blueprint"
 
-  // VPC configurations
+  /* -------------------------------------------------------------------------- */
+  /*                             VPC configurations                             */
+  /* -------------------------------------------------------------------------- */
   name     = "k3s_cluster"
   vpc_cidr = "10.0.0.0/16"
 
+
+  /* -------------------------------------------------------------------------- */
+  /*                        Public subnet configurations                        */
+  /* -------------------------------------------------------------------------- */
 
   // Public subnet configurations
   public_subnet_variables = [{
@@ -20,7 +26,8 @@ module "dev_infra" {
     vpc_name                        = module.dev_infra.vpc_name_output
   }]
 
-
+  
+  // Route table for public subnets
   aws_route_table_for_public_subnets = [{
     public_route_table_name = "public_route_table_1"
     public_vpc_id           = module.dev_infra.vpc_id_output
@@ -37,6 +44,10 @@ module "dev_infra" {
   }]
 
 
+  /* -------------------------------------------------------------------------- */
+  /*                        Private subnet configurations                       */
+  /* -------------------------------------------------------------------------- */
+
   // Private subnet configurations
   private_subnet_variables = [{
     private_subnet_name              = "private_subnet_1"
@@ -47,6 +58,8 @@ module "dev_infra" {
     }
   ]
 
+
+  // Route table for private subnets
   aws_route_table_for_private_subnets = [{
     private_route_table_name = "private_route_table_1"
     private_vpc_id           = module.dev_infra.vpc_id_output

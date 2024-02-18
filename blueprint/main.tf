@@ -1,3 +1,9 @@
+
+
+/* -------------------------------------------------------------------------- */
+/*                               Module For VPC                               */
+/* -------------------------------------------------------------------------- */
+
 module "my_vpc" {
   source        = "../modules/vpc"
   vpc_name      = var.name
@@ -8,10 +14,17 @@ module "my_vpc" {
   }
 }
 
+/* -------------------------------------------------------------------------- */
+/*                               Module For Subnet                            */
+/* -------------------------------------------------------------------------- */
 module "public_subnet_details" {
   source = "../modules/subnet"
 
-  // Public subnet configurations
+  /* -------------------------------------------------------------------------- */
+  /*                        Public subnet configurations                        */
+  /* -------------------------------------------------------------------------- */
+
+  //  Public subnet configurations
   public_subnet_configs = [
     {
       name              = var.public_subnet_variables[0].public_subnet_name
@@ -24,6 +37,7 @@ module "public_subnet_details" {
   ]
 
 
+  // Route table for public subnets
   aws_route_table_public = [
     {
       route_table_name = var.aws_route_table_for_public_subnets[0].public_route_table_name
@@ -32,6 +46,10 @@ module "public_subnet_details" {
     }
   ]
 
+
+  /* -------------------------------------------------------------------------- */
+  /*                        Private subnet configurations                       */
+  /* -------------------------------------------------------------------------- */
 
   // Private subnet configurations
   private_subnet_configs = [
@@ -44,6 +62,8 @@ module "public_subnet_details" {
     }
   ]
 
+
+  // Route table for private subnets
   aws_route_table_private = [
     {
       route_table_name = var.aws_route_table_for_private_subnets[0].private_route_table_name

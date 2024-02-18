@@ -1,4 +1,6 @@
-# For public subnet configurations
+/* -------------------------------------------------------------------------- */
+/*                      For public subnet configurations                      */
+/* -------------------------------------------------------------------------- */
 resource "aws_subnet" "public_subnets" {
   count                   = length(var.public_subnet_configs)
   vpc_id                  = var.public_subnet_configs[count.index].vpc_id
@@ -36,7 +38,9 @@ resource "aws_route_table_association" "public_subnet_association" {
 
 
 
-# For private subnet configurations
+ /* -------------------------------------------------------------------------- */
+ /*                      For private subnet configurations                     */
+ /* -------------------------------------------------------------------------- */
 
 resource "aws_subnet" "private_subnets" {
   count                   = length(var.private_subnet_configs)
@@ -71,6 +75,8 @@ resource "aws_route_table_association" "private_subnet_association" {
   subnet_id      = aws_subnet.private_subnets[count.index].id
   route_table_id = aws_route_table.private_subnets_table[count.index].id
 }
+
+
 
 
 // Nat Gateway for private subnets to access internet through public subnets 

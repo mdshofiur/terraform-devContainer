@@ -1,4 +1,6 @@
-// Variables for the public subnet module
+ /* -------------------------------------------------------------------------- */
+ /*                   Variables for the public subnet module                   */
+ /* -------------------------------------------------------------------------- */
 variable "public_subnet_configs" {
   type = list(object({
     name : string,
@@ -23,7 +25,9 @@ variable "aws_route_table_public" {
   description = "List of Route Table configurations"
 }
 
-// Variables for the private subnet module
+ /* -------------------------------------------------------------------------- */
+ /*                   Variables for the private subnet module                  */
+ /* -------------------------------------------------------------------------- */
 
 variable "private_subnet_configs" {
   type = list(object({

@@ -1,4 +1,6 @@
-# VPC variable definitions
+ /* -------------------------------------------------------------------------- */
+ /*                          VPC variable definitions                          */
+ /* -------------------------------------------------------------------------- */
 variable "vpc_cidr" {
   type = string
 }
@@ -7,7 +9,9 @@ variable "name" {
   type = string
 }
 
-# Public subnet variable definitions
+ /* -------------------------------------------------------------------------- */
+ /*                     Public subnet variable definitions                     */
+ /* -------------------------------------------------------------------------- */
 variable "public_subnet_variables" {
   type = list(object({
     public_subnet_name              = string
@@ -33,7 +37,11 @@ variable "aws_route_table_for_public_subnets" {
 }
 
 
-# Private subnet variable definitions
+/* -------------------------------------------------------------------------- */
+/*                     Private subnet variable definitions                    */
+/* -------------------------------------------------------------------------- */
+
+
 
 variable "private_subnet_variables" {
   type = list(object({
