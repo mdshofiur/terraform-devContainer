@@ -74,17 +74,18 @@ variable "aws_route_table_for_private_subnets" {
 
 
 variable "frontend_sg_details" {
+  description = "List of Security Group configurations"
   type = list(object({
-    name           = string
-    vpc_attachment = string
-    frontend_ingress = list(object({
+    sg_name                = string
+    vpc_attachment_with_id = string
+    frontend_ingress_rules = list(object({
       from_port   = number
       to_port     = number
       protocol    = string
       cidr_blocks = list(string)
       description = string
     }))
-    frontend_egress = list(object({
+    frontend_egress_rules = list(object({
       from_port   = number
       to_port     = number
       protocol    = string
@@ -92,5 +93,4 @@ variable "frontend_sg_details" {
       description = string
     }))
   }))
-  description = "List of Security Group configurations"
 }

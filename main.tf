@@ -80,17 +80,33 @@ module "dev_infra" {
   /* -------------------------------------------------------------------------- */
 
   frontend_sg_details = [{
-    name           = "frontend_sg"
-    vpc_attachment = module.dev_infra.vpc_id_output
-    frontend_ingress = [
+    sg_name                = "frontend_sg"
+    vpc_attachment_with_id = module.dev_infra.vpc_id_output
+    frontend_ingress_rules = [
       {
         from_port   = 6443
         to_port     = 6443
         protocol    = "tcp"
         cidr_blocks = ["10.0.0.0/16"]
         description = "Allow traffic from VPC"
-    }]
-    frontend_egress = [
+      },
+      {
+        from_port   = 2379
+        to_port     = 2380
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+        description = "Allow traffic from other security group"
+      },
+      {
+        from_port   = 8472
+        to_port     = 8472
+        protocol    = "udp"
+        cidr_blocks = ["10.0.0.0/16"]
+        description = "Allow traffic from VPC"
+      }
+
+    ]
+    frontend_egress_rules = [
       {
         from_port   = 0
         to_port     = 0
