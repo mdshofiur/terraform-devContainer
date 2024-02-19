@@ -115,5 +115,17 @@ module "dev_infra" {
         description = "Allow all traffic"
     }]
   }]
+
+
+  /* -------------------------------------------------------------------------- */
+  /*                        Key Pair Configuration                              */
+  /* -------------------------------------------------------------------------- */
+  key_pair_name_for_bastion = "k3s_key_pair"
+  public_key_path_dir       = "/id_rsa.pub"
+
+  
+
+
 }
+
 
