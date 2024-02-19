@@ -5,6 +5,7 @@ variable "vpc_cidr" {
   type = string
 }
 
+
 variable "name" {
   type = string
 }
@@ -65,4 +66,31 @@ variable "aws_route_table_for_private_subnets" {
     }))
   }))
   description = "List of Route Table configurations"
+}
+
+/* -------------------------------------------------------------------------- */
+/*                          Security Group variables                          */
+/* -------------------------------------------------------------------------- */
+
+
+variable "frontend_sg_details" {
+  type = list(object({
+    name           = string
+    vpc_attachment = string
+    frontend_ingress = list(object({
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+      description = string
+    }))
+    frontend_egress = list(object({
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+      description = string
+    }))
+  }))
+  description = "List of Security Group configurations"
 }

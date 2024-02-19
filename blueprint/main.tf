@@ -70,34 +70,109 @@ module "public_subnet_details" {
     }
   ]
 
-
-  # aws_route_table = [
-  #   {
-  #     route_table_name = "public_route_table_1",
-  #     vpc_id           = aws_vpc.main.id,
-  #     routes = [
-  #       {
-  #         cidr_block = "0.0.0.0/0",
-  #         gateway_id = aws_internet_gateway.igw.id
-  #       },
-  #       {
-  #         cidr_block = "10.0.1.0/24",
-  #         gateway_id = aws_nat_gateway.nat.id
-  #       }
-  #     ]
-  #   },
-  #   {
-  #     route_table_name = "public_route_table_2",
-  #     vpc_id           = aws_vpc.another.id,
-  #     routes = [
-  #       {
-  #         cidr_block = "0.0.0.0/0",
-  #         gateway_id = aws_internet_gateway.another_igw.id
-  #       }
-  #     ]
-  #   }
-  # ]
-
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*                          Module For Security Group                         */
+/* -------------------------------------------------------------------------- */
+
+
+
+module "security_group_list" {
+  source = "../modules/security_group"
+
+  frontend_sg = [
+    for detail in var.frontend_sg_details : {
+      name           = detail.name
+      vpc_attachment = detail.vpc_attachment
+      frontend_rules = zipmap(["frontend_ingress", "frontend_egress"], [
+        detail.frontend_ingress,
+        detail.frontend_egress
+      ])
+    }
+  ]
+}
+
+
+module "security_group_list" {
+  source = "../modules/security_group"
+
+  frontend_sg = [
+    for detail in var.frontend_sg_details : {
+      name           = detail.name
+      vpc_attachment = detail.vpc_attachment
+      frontend_ingress = [
+        for ingress in detail.frontend_ingress : merge(ingress, { type = "ingress" })
+      ]
+      frontend_egress = [
+        for egress in detail.frontend_egress : merge(egress, { type = "egress" })
+      ]
+    }
+  ]
+}
+
+
+
+module "security_group_list" {
+  source = "../modules/security_group"
+
+  frontend_sg = [
+    for detail in var.frontend_sg_details : {
+      name           = detail.name
+      vpc_attachment = detail.vpc_attachment
+      frontend_ingress = flatten([
+        for ingress in detail.frontend_ingress : {
+          from_port   = ingress.from_port
+          to_port     = ingress.to_port
+          protocol    = ingress.protocol
+          cidr_blocks = ingress.cidr_blocks
+          description = ingress.description
+        }
+      ])
+      frontend_egress = flatten([
+        for egress in detail.frontend_egress : {
+          from_port   = egress.from_port
+          to_port     = egress.to_port
+          protocol    = egress.protocol
+          cidr_blocks = egress.cidr_blocks
+          description = egress.description
+        }
+      ])
+    }
+  ]
+}
+
+
+
+
+module "security_group_list" {
+  source = "../modules/security_group"
+  frontend_sg = [
+    {
+      name           = var.frontend_sg_details[0].name
+      vpc_attachment = var.frontend_sg_details[0].vpc_attachment
+      frontend_ingress = [
+        {
+          from_port   = var.frontend_sg_details[0].frontend_ingress[0].from_port
+          to_port     = var.frontend_sg_details[0].frontend_ingress[0].to_port
+          protocol    = var.frontend_sg_details[0].frontend_ingress[0].protocol
+          cidr_blocks = var.frontend_sg_details[0].frontend_ingress[0].cidr_blocks
+          description = var.frontend_sg_details[0].frontend_ingress[0].description
+        }
+      ]
+      frontend_egress = [
+        {
+          from_port   = var.frontend_sg_details[0].frontend_egress[0].from_port
+          to_port     = var.frontend_sg_details[0].frontend_egress[0].to_port
+          protocol    = var.frontend_sg_details[0].frontend_egress[0].protocol
+          cidr_blocks = var.frontend_sg_details[0].frontend_egress[0].cidr_blocks
+          description = var.frontend_sg_details[0].frontend_egress[0].description
+        }
+      ]
+    }
+  ]
+}
+
 
 
