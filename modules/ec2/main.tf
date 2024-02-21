@@ -21,24 +21,19 @@ data "aws_ami" "ubuntu" {
 }
 
 
-resource "aws_instance" "public_vm" {
+
+resource "aws_instance" "vm_instance" {
   count = length(var.ec2)
 
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.ec2[count.index].instance_type
-  associate_public_ip_address = var.ec2[count.index].allow_public_ip
+  associate_public_ip_address = var.ec2[count.index].instance_allow_public_ip
 
   key_name        = var.ec2[count.index].instance_key_name
-  security_groups = [var.ec2[count.index].instance_security_group]
+  security_groups = var.ec2[count.index].instance_security_group_id
   subnet_id       = var.ec2[count.index].instance_subnet_id
 
-
-
-
-  tags = var.ec2[count.index].instance_name
-
+  tags = {
+    Name = var.ec2[count.index].instance_name
+  }
 }
-
-
-
-

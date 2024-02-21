@@ -108,3 +108,19 @@ variable "public_key_path_dir" {
   type        = string
   description = "Path to the public key"
 }
+
+/* -------------------------------------------------------------------------- */
+/*                          EC2 instance variable definitions                 */
+/* -------------------------------------------------------------------------- */
+
+variable "ec2_instance" {
+  type = list(object({
+    instance_type              = string
+    instance_name              = string
+    instance_allow_public_ip   = bool
+    instance_key_name          = string
+    instance_security_group_id = list(string)
+    instance_subnet_id         = string
+  }))
+  description = "List of EC2 instance configurations"
+}

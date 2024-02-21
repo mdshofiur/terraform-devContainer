@@ -94,7 +94,7 @@ module "dev_infra" {
         from_port   = 2379
         to_port     = 2380
         protocol    = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
+        cidr_blocks = ["10.0.0.0/16"]
         description = "Allow traffic from other security group"
       },
       {
@@ -103,8 +103,7 @@ module "dev_infra" {
         protocol    = "udp"
         cidr_blocks = ["10.0.0.0/16"]
         description = "Allow traffic from VPC"
-      }
-
+      },
     ]
     frontend_egress_rules = [
       {
@@ -121,9 +120,35 @@ module "dev_infra" {
   /*                        Key Pair Configuration                              */
   /* -------------------------------------------------------------------------- */
   key_pair_name_for_bastion = "k3s_key_pair"
-  public_key_path_dir       = "/id_rsa.pub"
+  public_key_path_dir       = "./k3s_key_pair.pub"
 
-  
+
+  /* -------------------------------------------------------------------------- */
+  /*                        EC2 Instance Configuration                          */
+  /* -------------------------------------------------------------------------- */
+
+
+  ec2_instance = [
+    {
+      instance_name              = "bastion_host"
+      instance_type              = "t2.micro"
+      instance_key_name          = "k3s_key_pair"
+      instance_allow_public_ip   = true
+      instance_subnet_id         = module.dev_infra.public_subnet_id_output
+      instance_security_group_id = [module.dev_infra.frontend_sg_id_output]
+    },
+    {
+      instance_name              = "k3s_master"
+      instance_type              = "t2.micro"
+      instance_key_name          = "k3s_key_pair"
+      instance_allow_public_ip   = false
+      instance_subnet_id         = module.dev_infra.private_subnet_id_output
+      instance_security_group_id = [module.dev_infra.frontend_sg_id_output]
+    }
+  ]
+
+
+
 
 
 }

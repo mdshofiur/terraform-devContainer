@@ -55,15 +55,25 @@
 
 
 
+# variable "ec2" {
+#   type = list(object({
+#     instance_type = string
+#     # ami_filter               = map(string)
+#     # instance_tags            = map(string)
+#     instance_name              = string
+#     instance_allow_public_ip   = bool
+#     instance_key_name          = string
+#     instance_security_group_id = string
+#     instance_subnet_id         = string
+#   }))
+# }
 variable "ec2" {
   type = list(object({
-    instance_type = string
-    # ami_filter               = map(string)
-    # instance_tags            = map(string)
-    instance_name            = string
-    instance_allow_public_ip = bool
-    instance_key_name        = string
-    instance_security_group  = string
-    instance_subnet_id       = string
+    instance_type              = string
+    instance_name              = string
+    instance_allow_public_ip   = bool
+    instance_key_name          = string
+    instance_security_group_id = list(string)
+    instance_subnet_id         = string
   }))
 }

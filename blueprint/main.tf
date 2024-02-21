@@ -77,20 +77,53 @@ module "public_subnet_details" {
 /*                          Module For Security Group                         */
 /* -------------------------------------------------------------------------- */
 
-
-
-module "security_group_list" {
-  source = "../modules/security_group"
-
-  frontend_sg = [
-    for detail in var.frontend_sg_details : { name = detail.sg_name
-      vpc_attachment                               = detail.vpc_attachment_with_id
-      frontend_ingress                             = detail.frontend_ingress_rules
-      frontend_egress                              = detail.frontend_egress_rules
+locals {
+  frontend_sg_details = [
+    for detail in var.frontend_sg_details : {
+      name             = detail.sg_name
+      vpc_attachment   = detail.vpc_attachment_with_id
+      frontend_ingress = detail.frontend_ingress_rules
+      frontend_egress  = detail.frontend_egress_rules
     }
   ]
 }
 
+module "security_group_list" {
+  source      = "../modules/security_group"
+  frontend_sg = local.frontend_sg_details
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                               Module For Key Pair                           */
+/* -------------------------------------------------------------------------- */
+
+module "key_pair" {
+  source          = "../modules/key-pair"
+  key_pair_name   = var.key_pair_name_for_bastion
+  public_key_path = var.public_key_path_dir
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               Module For EC2                               */
+/* -------------------------------------------------------------------------- */
+
+module "ec2_instance" {
+  source = "../modules/ec2"
+
+  count = length(var.ec2_instance)
+
+  ec2 = [
+    {
+      instance_type              = var.ec2_instance[count.index].instance_type
+      instance_name              = var.ec2_instance[count.index].instance_name
+      instance_allow_public_ip   = var.ec2_instance[count.index].instance_allow_public_ip
+      instance_key_name          = var.ec2_instance[count.index].instance_key_name
+      instance_security_group_id = var.ec2_instance[count.index].instance_security_group_id
+      instance_subnet_id         = var.ec2_instance[count.index].instance_subnet_id
+    }
+  ]
+}
 
 
 
