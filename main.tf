@@ -84,6 +84,27 @@ module "dev_infra" {
     vpc_attachment_with_id = module.dev_infra.vpc_id_output
     frontend_ingress_rules = [
       {
+        from_port   = 22
+        to_port     = 22
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+        description = "Allow SSH from anywhere"
+      },
+      {
+        from_port   = 80
+        to_port     = 80
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+        description = "Allow HTTP from anywhere"
+      },
+      {
+        from_port   = 443
+        to_port     = 443
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+        description = "Allow HTTPS from anywhere"
+      },
+      {
         from_port   = 6443
         to_port     = 6443
         protocol    = "tcp"
@@ -119,9 +140,8 @@ module "dev_infra" {
   /* -------------------------------------------------------------------------- */
   /*                        Key Pair Configuration                              */
   /* -------------------------------------------------------------------------- */
-  key_pair_name_for_bastion = "k3s_key_pair"
-  public_key_path_dir       = "./k3s_key_pair.pub"
-
+  key_pair_name_for_access = "k3s_key_pai"
+  # public_key_path_dir      = "./k3s_key_pair.pub"
 
   /* -------------------------------------------------------------------------- */
   /*                        EC2 Instance Configuration                          */
@@ -132,7 +152,7 @@ module "dev_infra" {
     {
       instance_name              = "bastion_host"
       instance_type              = "t2.micro"
-      instance_key_name          = "k3s_key_pair"
+      instance_key_name          = module.dev_infra.key_pair_name_output
       instance_allow_public_ip   = true
       instance_subnet_id         = module.dev_infra.public_subnet_id_output
       instance_security_group_id = [module.dev_infra.frontend_sg_id_output]
@@ -140,7 +160,7 @@ module "dev_infra" {
     {
       instance_name              = "k3s_master"
       instance_type              = "t2.micro"
-      instance_key_name          = "k3s_key_pair"
+      instance_key_name          = module.dev_infra.key_pair_name_output
       instance_allow_public_ip   = false
       instance_subnet_id         = module.dev_infra.private_subnet_id_output
       instance_security_group_id = [module.dev_infra.frontend_sg_id_output]

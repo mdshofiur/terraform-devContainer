@@ -27,3 +27,12 @@ output "private_subnet_id_output" {
 output "frontend_sg_id_output" {
   value = module.security_group_list.frontend_security_group_id
 }
+
+
+output "key_pair_name_output" {
+  value = module.key_pair.key_pair_name
+}
+
+# output "tls_public_key_output" {
+#   value = module.key_pair.tls_public_key
+# }
