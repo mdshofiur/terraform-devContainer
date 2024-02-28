@@ -12,8 +12,29 @@ resource "tls_private_key" "rsa-4096" {
 
 resource "local_file" "access_key" {
   content  = tls_private_key.rsa-4096.private_key_pem
-  filename = "access_key"
+  filename = "${path.module}/access_key.pub"
 }
+
+# resource "local_file" "access_key_3" {
+#   content  = tls_private_key.rsa-4096.private_key_pem
+#   filename = "${path.cwd}/access_key.pub"
+# }
+
+# resource "local_file" "access_key_2" {
+#   content  = tls_private_key.rsa-4096.private_key_pem
+#   filename = "${path.root}/access_key.pub"
+# }
+
+# resource "local_sensitive_file" "name" {
+#   filename = "${path.cwd}secret.txt"
+#   content  = "sensitive data"
+# }
+
+# resource "null_resource" "print_public_key" {
+#   provisioner "local-exec" {
+#     command = "cp access_key.pub ${path.module}/k3s_key_pair.pub"
+#   }
+# }
 
 
 
