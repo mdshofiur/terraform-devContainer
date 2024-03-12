@@ -53,6 +53,7 @@ resource "aws_subnet" "private_subnets" {
   }
 }
 
+
 resource "aws_route_table" "private_subnets_table" {
   count  = length(var.private_subnet_configs)
   vpc_id = var.private_subnet_configs[count.index].vpc_id

@@ -6,7 +6,7 @@ This Terraform module creates a VPC with public and private subnets.
 
 ## Usage
 
-```hcl
+<!-- ```hcl
 module "vpc" {
   source = "./vpc"
 
@@ -16,4 +16,4 @@ module "vpc" {
   allow_public_ip  = [true, false]
   private_subnets  = ["10.20.0.0/24"]
   public_subnets   = ["10.40.0.0/24"]
-}
+} -->
