@@ -99,15 +99,16 @@ variable "sg_details" {
 /*                          Key Pair variable definitions                     */
 /* -------------------------------------------------------------------------- */
 
-variable "key_pair_name_for_access" {
+variable "key_pair_name" {
   type        = string
   description = "Name of the key pair"
 }
 
-# variable "public_key_path_dir" {
-#   type        = string
-#   description = "Path to the public key"
-# }
+variable "public_key_dir" {
+  type        = string
+  description = "Path to the public key"
+}
+
 
 /* -------------------------------------------------------------------------- */
 /*                          EC2 instance variable definitions                 */

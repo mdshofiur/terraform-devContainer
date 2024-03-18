@@ -17,3 +17,7 @@ apply:
 formate: 
 	@echo "Planning Formateing..."
 	@terraform fmt -recursive
+
+destroy:
+	@echo "Destroying Terraform..."
+	@terraform destroy --auto-approve

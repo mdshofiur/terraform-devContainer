@@ -141,8 +141,8 @@ module "dev_infra" {
   /* -------------------------------------------------------------------------- */
   /*                        Key Pair Configuration                              */
   /* -------------------------------------------------------------------------- */
-  key_pair_name_for_access = "k3s_key_pai"
-  # public_key_path_dir      = "./k3s_key_pair.pub"
+  key_pair_name  = "k3s_access_key"
+  public_key_dir = "${path.module}/public_key.pub"
 
   /* -------------------------------------------------------------------------- */
   /*                        EC2 Instance Configuration                          */

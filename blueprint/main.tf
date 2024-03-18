@@ -107,9 +107,9 @@ module "security_group_list" {
 /* -------------------------------------------------------------------------- */
 
 module "key_pair" {
-  source        = "../modules/key-pair"
-  key_pair_name = var.key_pair_name_for_access
-  # public_key_path = var.public_key_path_dir
+  source          = "../modules/key-pair"
+  key_pair_name   = var.key_pair_name
+  public_key_path = var.public_key_dir
 }
 
 /* -------------------------------------------------------------------------- */

@@ -1,19 +1,19 @@
 resource "aws_key_pair" "dev_key_pair" {
   key_name   = var.key_pair_name
-  public_key = tls_private_key.rsa-4096.public_key_openssh
+  public_key = file(var.public_key_path)
 }
 
 
-resource "tls_private_key" "rsa-4096" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
+# resource "tls_private_key" "rsa-4096" {
+#   algorithm = "RSA"
+#   rsa_bits  = 4096
+# }
 
 
-resource "local_file" "access_key" {
-  content  = tls_private_key.rsa-4096.private_key_pem
-  filename = "${path.module}/access_key.pub"
-}
+# resource "local_file" "access_key" {
+#   content  = tls_private_key.rsa-4096.private_key_pem
+#   filename = "${path.module}/access_key.pub"
+# }
 
 # resource "local_file" "access_key_3" {
 #   content  = tls_private_key.rsa-4096.private_key_pem
