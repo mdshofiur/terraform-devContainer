@@ -1,18 +1,18 @@
 /* -------------------------------------------------------------------------- */
 /*                  Variables for the frontend security group                 */
 /* -------------------------------------------------------------------------- */
-variable "frontend_sg" {
+variable "security_group" {
   type = list(object({
     name           = string
     vpc_attachment = string
-    frontend_ingress = list(object({
+    dev_ingress_rules = list(object({
       from_port   = number
       to_port     = number
       protocol    = string
       cidr_blocks = list(string)
       description = string
     }))
-    frontend_egress = list(object({
+    dev_egress_rules = list(object({
       from_port   = number
       to_port     = number
       protocol    = string

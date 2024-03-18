@@ -29,9 +29,9 @@ module "dev_infra" {
 
   // Route table for public subnets
   aws_route_table_for_public_subnets = [{
-    public_route_table_name = "public_route_table_1"
-    public_vpc_id           = module.dev_infra.vpc_id_output
-    public_routes = [
+    route_table_name = "public_route_table_1"
+    vpc_id           = module.dev_infra.vpc_id_output
+    routes = [
       {
         cidr_block = "10.0.0.0/16"
         gateway_id = "local"
@@ -61,9 +61,9 @@ module "dev_infra" {
 
   // Route table for private subnets
   aws_route_table_for_private_subnets = [{
-    private_route_table_name = "private_route_table_1"
-    private_vpc_id           = module.dev_infra.vpc_id_output
-    private_routes = [
+    route_table_name = "private_route_table_1"
+    vpc_id           = module.dev_infra.vpc_id_output
+    routes = [
       {
         cidr_block = "10.0.0.0/16"
         gateway_id = "local"
@@ -75,14 +75,15 @@ module "dev_infra" {
     ]
   }]
 
+
   /* -------------------------------------------------------------------------- */
   /*                        Security Group Configuration                        */
   /* -------------------------------------------------------------------------- */
 
-  frontend_sg_details = [{
-    sg_name                = "frontend_sg"
+  sg_details = [{
+    sg_name                = "dev_sg"
     vpc_attachment_with_id = module.dev_infra.vpc_id_output
-    frontend_ingress_rules = [
+    ingress_rules = [
       {
         from_port   = 22
         to_port     = 22
@@ -126,7 +127,7 @@ module "dev_infra" {
         description = "Allow traffic from VPC"
       },
     ]
-    frontend_egress_rules = [
+    egress_rules = [
       {
         from_port   = 0
         to_port     = 0
@@ -155,7 +156,7 @@ module "dev_infra" {
       instance_key_name          = module.dev_infra.key_pair_name_output
       instance_allow_public_ip   = true
       instance_subnet_id         = module.dev_infra.public_subnet_id_output
-      instance_security_group_id = [module.dev_infra.frontend_sg_id_output]
+      instance_security_group_id = [module.dev_infra.dev_sg_id_output]
     },
     {
       instance_name              = "k3s_master"
@@ -163,7 +164,7 @@ module "dev_infra" {
       instance_key_name          = module.dev_infra.key_pair_name_output
       instance_allow_public_ip   = false
       instance_subnet_id         = module.dev_infra.private_subnet_id_output
-      instance_security_group_id = [module.dev_infra.frontend_sg_id_output]
+      instance_security_group_id = [module.dev_infra.dev_sg_id_output]
     }
   ]
 

@@ -2,14 +2,14 @@
 /*                     Security Group for Frontend Servers                    */
 /* -------------------------------------------------------------------------- */
 
-resource "aws_security_group" "frontend_sg" {
-  count = length(var.frontend_sg)
+resource "aws_security_group" "dev_security_group" {
+  count = length(var.security_group)
 
-  name   = var.frontend_sg[count.index].name
-  vpc_id = var.frontend_sg[count.index].vpc_attachment
+  name   = var.security_group[count.index].name
+  vpc_id = var.security_group[count.index].vpc_attachment
 
   dynamic "ingress" {
-    for_each = var.frontend_sg[count.index].frontend_ingress
+    for_each = var.security_group[count.index].dev_ingress_rules
     content {
       from_port   = ingress.value.from_port
       to_port     = ingress.value.to_port
@@ -20,7 +20,7 @@ resource "aws_security_group" "frontend_sg" {
   }
 
   dynamic "egress" {
-    for_each = var.frontend_sg[count.index].frontend_egress
+    for_each = var.security_group[count.index].dev_egress_rules
     content {
       from_port   = egress.value.from_port
       to_port     = egress.value.to_port
@@ -31,7 +31,7 @@ resource "aws_security_group" "frontend_sg" {
   }
 
   tags = {
-    Name = var.frontend_sg[count.index].name
+    Name = var.security_group[count.index].name
   }
 
 }
