@@ -159,38 +159,13 @@ module "dev_infra" {
       instance_security_group_id = [module.dev_infra.dev_sg_id_output]
     },
     {
-      instance_name              = "nginx_server"
+      instance_name              = "nginx"
       instance_type              = "t2.micro"
       instance_key_name          = module.dev_infra.key_pair_name_output
       instance_allow_public_ip   = true
       instance_subnet_id         = module.dev_infra.public_subnet_id_output
       instance_security_group_id = [module.dev_infra.dev_sg_id_output]
     },
-    {
-      instance_name              = "k3s_master"
-      instance_type              = "t2.micro"
-      instance_key_name          = module.dev_infra.key_pair_name_output
-      instance_allow_public_ip   = false
-      instance_subnet_id         = module.dev_infra.private_subnet_id_output
-      instance_security_group_id = [module.dev_infra.dev_sg_id_output]
-    },
-    {
-      instance_name              = "worker_1",
-      instance_type              = "t2.micro"
-      instance_key_name          = module.dev_infra.key_pair_name_output
-      instance_allow_public_ip   = false
-      instance_subnet_id         = module.dev_infra.private_subnet_id_output
-      instance_security_group_id = [module.dev_infra.dev_sg_id_output]
-    },
-    {
-      instance_name              = "worker_2",
-      instance_type              = "t2.micro"
-      instance_key_name          = module.dev_infra.key_pair_name_output
-      instance_allow_public_ip   = false
-      instance_subnet_id         = module.dev_infra.private_subnet_id_output
-      instance_security_group_id = [module.dev_infra.dev_sg_id_output]
-    }
-
   ]
 
 

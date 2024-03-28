@@ -116,22 +116,29 @@ module "key_pair" {
 /*                               Module For EC2                               */
 /* -------------------------------------------------------------------------- */
 
+# module "ec2_instance" {
+#   source = "../modules/ec2"
+
+#   count = length(var.ec2_instance)
+
+#   ec2 = [
+#     {
+#       instance_type              = var.ec2_instance[count.index].instance_type
+#       instance_name              = var.ec2_instance[count.index].instance_name
+#       instance_allow_public_ip   = var.ec2_instance[count.index].instance_allow_public_ip
+#       instance_key_name          = var.ec2_instance[count.index].instance_key_name
+#       instance_security_group_id = var.ec2_instance[count.index].instance_security_group_id
+#       instance_subnet_id         = var.ec2_instance[count.index].instance_subnet_id
+#     }
+#   ]
+# }
+
+
 module "ec2_instance" {
-  source = "../modules/ec2"
-
-  count = length(var.ec2_instance)
-
-  ec2 = [
-    {
-      instance_type              = var.ec2_instance[count.index].instance_type
-      instance_name              = var.ec2_instance[count.index].instance_name
-      instance_allow_public_ip   = var.ec2_instance[count.index].instance_allow_public_ip
-      instance_key_name          = var.ec2_instance[count.index].instance_key_name
-      instance_security_group_id = var.ec2_instance[count.index].instance_security_group_id
-      instance_subnet_id         = var.ec2_instance[count.index].instance_subnet_id
-    }
-  ]
+  source             = "../modules/ec2"
+  instance_variables = var.ec2_instance
 }
+
 
 
 

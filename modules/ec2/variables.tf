@@ -67,7 +67,8 @@
 #     instance_subnet_id         = string
 #   }))
 # }
-variable "ec2" {
+
+variable "instance_variables" {
   type = list(object({
     instance_type              = string
     instance_name              = string
@@ -76,4 +77,5 @@ variable "ec2" {
     instance_security_group_id = list(string)
     instance_subnet_id         = string
   }))
+  description = "List of EC2 instance configurations"
 }
