@@ -59,9 +59,9 @@ resource "aws_instance" "vm_instance" {
     Name = each.value.instance_name
   }
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 
 
 
